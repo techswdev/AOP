@@ -2,7 +2,6 @@ package study.spring.aop.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -18,17 +17,18 @@ import java.lang.reflect.Method;
 public class CustomAop {
 
     @Pointcut("execution(* study.spring.aop.controller..*.*(..))")
-    private void cut(){}
+    private void cut() {
+    }
 
     @Before("cut()")
-    public void before(JoinPoint joinPoint){
+    public void before(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         log.info("----------before start---------------------");
-        log.info("method name : {}",method.getName());
+        log.info("method name : {}", method.getName());
 
-        Object [] args = joinPoint.getArgs();
-        for(Object obj : args){
+        Object[] args = joinPoint.getArgs();
+        for (Object obj : args) {
 
             log.info("obj.getClass().getSimpleName() : {}", obj.getClass().getSimpleName());
             log.info("obj : {}", obj);
@@ -39,7 +39,7 @@ public class CustomAop {
     }
 
     @AfterReturning(value = "cut()", returning = "returnObj")
-    public void afterReturn(JoinPoint joinPoint, Object returnObj){
+    public void afterReturn(JoinPoint joinPoint, Object returnObj) {
 
         log.info("----------after start---------------------");
 
